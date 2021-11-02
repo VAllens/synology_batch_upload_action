@@ -9,18 +9,20 @@ const pRequestPost = util.promisify(request.post);
 
 const host = core.getInput("host");
 const username = core.getInput("username");
-const password = core.getInput("password");
+let password = decodeURIComponent(core.getInput("password"));
 const filepath = core.getInput("filepath");
 const uploadpath = core.getInput("uploadpath");
 let filename = core.getInput("filename")
-const overwrite = core.getInput("overwrite").toString().toLowerCase() == 'true';
-const createparent = core.getInput("createparent").toString().toLowerCase() == 'true';
+const overwrite = core.getBooleanInput("overwrite") == true;
+const createparent = core.getBooleanInput("createparent") == true;
 
 let fileExist = fs.existsSync(filepath)
+
 if (!fileExist) {
     core.setFailed(`file not exist ${filepath}`);
     return
 }
+
 if(!filename){
     filename = path.basename(filepath)
 }
