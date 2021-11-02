@@ -38,14 +38,14 @@ async function auth() {
         },
     };
     let res = await pRequestGet(options)
+    core.info(res.body)
     try {
         let body = JSON.parse(res.body)
         return body.data.sid
     }
     catch (e) {
-        console.error(res.body)
+        core.error(res.body)
         core.setFailed(e)
-        console.error(e)
         return null
     }
 }
@@ -76,6 +76,7 @@ async function upload(session) {
     }
 
     let res = await pRequestPost(options)
+    core.info(res.body)
     let body = JSON.parse(res)
     if (!body.success) {
         core.setFailed(`upload is not successful ${res.body}`)
