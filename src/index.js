@@ -25,6 +25,7 @@ if(!filename){
 }
 
 async function auth() {
+    core.info('start auth')
     let options = {
         url: `${host}/webapi/auth.cgi`,
         method: 'GET',
@@ -38,6 +39,7 @@ async function auth() {
         },
     };
     let res = await pRequestGet(options)
+    core.info('end auth')
     core.info(res.body)
     try {
         let body = JSON.parse(res.body)
@@ -51,6 +53,7 @@ async function auth() {
 }
 
 async function upload(session) {
+    core.info('start upload')
     let options = {
         url: `${host}/webapi/entry.cgi`,
         method: 'POST',
@@ -81,6 +84,7 @@ async function upload(session) {
     if (!body.success) {
         core.setFailed(`upload is not successful ${res.body}`)
     }
+    core.info('end upload')
 }
 
 async function run() {
@@ -93,7 +97,6 @@ async function run() {
         await upload(session)
     }
     catch (e) {
-        core.error(e)
         core.setFailed(e)
     }
 }
