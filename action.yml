@@ -10,7 +10,6 @@ inputs:
   password:
     required: true
     description: Synology account password
-    required: false
   filepath:
     required: true
     description: Local location of file 
@@ -18,16 +17,16 @@ inputs:
     required: true
     description: Synology NAS location to upload file 
   filename:
+    required: false
     description: Set custom file name
-    required: false
   overwrite: 
+    required: false
+    default: false
     description: If true, always overwrite exist file.
-    required: false
-    default: false
   createparent: 
-    description: If true, make directory on Synology Nas
     required: false
     default: false
+    description: If true, make directory on Synology Nas
 runs:
   using: "node12"
   main: "src/index.js"
