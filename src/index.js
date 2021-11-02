@@ -1,5 +1,4 @@
 const core = require("@actions/core");
-core.info('init start')
 const request = require('request')
 const util = require('util');
 const fs = require('fs')
@@ -27,7 +26,7 @@ if(!filename){
     filename = path.basename(filepath)
 }
 
-core.info('init end')
+core.info(`initialized`)
 
 async function auth() {
     core.info('start auth')
@@ -44,13 +43,14 @@ async function auth() {
         },
     };
     let res = await pRequestGet(options)
-    core.info('end auth')
     core.info(res.body)
     try {
+        core.info('auth success')
         let body = JSON.parse(res.body)
         return body.data.sid
     }
     catch (e) {
+        core.info('auth fail')
         core.error(res.body)
         core.setFailed(e)
         return null
@@ -85,11 +85,13 @@ async function upload(session) {
 
     let res = await pRequestPost(options)
     core.info(res.body)
-    let body = JSON.parse(res)
+    let body = JSON.parse(res.body)
     if (!body.success) {
+        core.error(`upload is not successful ${res.body}`)
         core.setFailed(`upload is not successful ${res.body}`)
+        return
     }
-    core.info('end upload')
+    core.info('upload success')
 }
 
 async function run() {
