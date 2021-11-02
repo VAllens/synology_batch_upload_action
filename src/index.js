@@ -43,6 +43,7 @@ async function auth() {
         return body.data.sid
     }
     catch (e) {
+        console.error(res.body)
         core.setFailed(e)
         console.error(e)
         return null
