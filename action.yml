@@ -1,0 +1,33 @@
+name: "Synology Upload Action" 
+description: "Upload file to Synology Nas" 
+inputs:
+  host:
+    required: true
+    description: Synology Nas Domain
+  username:
+    required: true
+    description: Synology account name
+  password:
+    required: true
+    description: Synology account password
+    required: false
+  filepath:
+    required: true
+    description: Local location of file 
+  uploadpath:
+    required: true
+    description: Synology NAS location to upload file 
+  filename:
+    description: Set custom file name
+    required: false
+  overwrite: 
+    description: If true, always overwrite exist file.
+    required: false
+    default: false
+  createparent: 
+    description: If true, make directory on Synology Nas
+    required: false
+    default: false
+runs:
+  using: "node12"
+  main: "src/index.js"
