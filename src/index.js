@@ -11,14 +11,17 @@ const username = core.getInput("username");
 const password = core.getInput("password");
 const filepath = core.getInput("filepath");
 const uploadpath = core.getInput("uploadpath");
-const filename = core.getInput("filename") ?? path.basename(filepath);
+let filename = core.getInput("filename")
 const overwrite = core.getInput("overwrite").toString().toLowerCase() == 'true';
 const createparent = core.getInput("createparent").toString().toLowerCase() == 'true';
 
 let fileExist = fs.existsSync(filepath)
-if(!fileExist){
+if (!fileExist) {
     core.setFailed(`file not exist ${filepath}`);
     return
+}
+if(!filename){
+    filename = path.basename(filepath)
 }
 
 async function auth() {
@@ -35,11 +38,11 @@ async function auth() {
         },
     };
     let res = await pRequestGet(options)
-    try{
+    try {
         let body = JSON.parse(res.body)
         return body.data.sid
     }
-    catch(e){
+    catch (e) {
         core.setFailed(e)
         console.error(e)
         return null
@@ -66,28 +69,28 @@ async function upload(session) {
                 value: fs.createReadStream(filepath),
                 options: {
                     filename: filename,
-                  }
+                }
             }
         }
     }
 
     let res = await pRequestPost(options)
     let body = JSON.parse(res)
-    if(!body.success){
+    if (!body.success) {
         core.setFailed(`upload is not successful ${res.body}`)
     }
 }
 
-async function run(){
-    try{
+async function run() {
+    try {
         let session = await auth()
-        if(session == null){
+        if (session == null) {
             core.setFailed('session is null')
             return
         }
         await upload(session)
     }
-    catch(e){
+    catch (e) {
         core.setFailed(e)
     }
 }
