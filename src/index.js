@@ -1,4 +1,5 @@
 const core = require("@actions/core");
+core.info('init start')
 const request = require('request')
 const util = require('util');
 const fs = require('fs')
@@ -23,6 +24,8 @@ if (!fileExist) {
 if(!filename){
     filename = path.basename(filepath)
 }
+
+core.info('init end')
 
 async function auth() {
     core.info('start auth')
