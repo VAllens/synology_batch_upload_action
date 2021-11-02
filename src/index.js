@@ -93,6 +93,7 @@ async function run() {
         await upload(session)
     }
     catch (e) {
+        core.error(e)
         core.setFailed(e)
     }
 }
