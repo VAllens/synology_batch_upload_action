@@ -8,7 +8,7 @@ const pRequestPost = util.promisify(request.post);
 
 const host = core.getInput("host");
 const username = core.getInput("username");
-let password = encodeURIComponent(core.getInput("password"));
+let password = core.getInput("password");
 const filepath = core.getInput("filepath");
 const uploadpath = core.getInput("uploadpath");
 let filename = core.getInput("filename")
@@ -47,8 +47,7 @@ async function auth() {
     try {
         let body = JSON.parse(res.body)
         if (body.success == false) {
-            core.error('auth fail')
-            core.error(res.body)
+            core.info('auth fail')
             core.setFailed('auth fail')
             return null
         } else {
