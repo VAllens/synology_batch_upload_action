@@ -9,7 +9,7 @@ inputs:
     description: Synology account name
   password:
     required: true
-    description: Synology account password. must encode with decodeURIComponent
+    description: Synology account password
   filepath:
     required: true
     description: Local location of file 

@@ -8,7 +8,7 @@ const pRequestPost = util.promisify(request.post);
 
 const host = core.getInput("host");
 const username = core.getInput("username");
-let password = decodeURIComponent(core.getInput("password"));
+let password = encodeURIComponent(core.getInput("password"));
 const filepath = core.getInput("filepath");
 const uploadpath = core.getInput("uploadpath");
 let filename = core.getInput("filename")
@@ -22,7 +22,7 @@ if (!fileExist) {
     return
 }
 
-if(!filename){
+if (!filename) {
     filename = path.basename(filepath)
 }
 
@@ -45,9 +45,16 @@ async function auth() {
     let res = await pRequestGet(options)
     core.info(res.body)
     try {
-        core.info('auth success')
         let body = JSON.parse(res.body)
-        return body.data.sid
+        if (body.success == false) {
+            core.error('auth fail')
+            core.error(res.body)
+            core.setFailed('auth fail')
+            return null
+        } else {
+            core.info('auth success')
+            return body.data.sid
+        }
     }
     catch (e) {
         core.info('auth fail')

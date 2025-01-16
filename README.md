@@ -1,5 +1,10 @@
+# Synology Upload Action
+
+Upload a file to Synology Nas
+
 ## Run
-```
+
+```yaml
 name: Test CI
 
 on:
@@ -25,9 +30,9 @@ jobs:
         createparent: true
 ```
 
-
 ## How to build
-```
+
+```bash
 npm install
 npx webpack
 ```

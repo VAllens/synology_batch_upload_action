@@ -1,6 +1,6 @@
 {
   "name": "synolody_upload_action",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -9,11 +9,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@actions/core": "^1.6.0",
+    "@actions/core": "1.11.1",
     "request": "^2.88.2"
   },
   "devDependencies": {
-    "webpack": "^5.61.0",
-    "webpack-cli": "^4.9.1"
+    "webpack": "5.97.1",
+    "webpack-cli": "6.0.1"
   }
 }
